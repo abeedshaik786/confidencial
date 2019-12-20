@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body class="container">
+<div class="modal fade" id="elegantModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <!--Content-->
+  <div class="modal-content form-elegant">
+    <!--Header-->
+    <div class="modal-header text-center">
+      <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>Customer</strong></h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body mx-4">
+      <!--Body-->
+      <form action="{% url 'Customer:customer_saving' %}" method="POST">
+              {% csrf_token %}     
+              <input type="hidden" name="subject" value="{{ subject.id }}" >
+        <div class="md-form mb-5">
+        <input type="text" id="Form-email1" placeholder='FirstName' name='firstname' class="form-control validate">
+      </div>
+      <div class="md-form mb-5">
+            <input type="text" id="Form-email1" placeholder='ScondName' name='secondname'class="form-control validate">
+          </div>
+      <div class="md-form pb-3">
+        <input type="text" id="Form-pass1" placeholder='Companyname' name="companyname" class="form-control validate">
+      </div>
+      <div class="md-form pb-3">
+          <input type="number" id="Form-pass1" placeholder='Companyname'name="gsttax" class="form-control validate">
+        </div>
+      <div class="text-center mb-3">
+            <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Create</button>
+          </div>
+    </form>
+
+      
+      <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in
+        with:</p>
+
+      <div class="row my-3 d-flex justify-content-center">
+        <!--Facebook-->
+        <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a"><i class="fab fa-facebook-f text-center"></i></button>
+        <!--Twitter-->
+        <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a"><i class="fab fa-twitter"></i></button>
+        <!--Google +-->
+        <button type="button" class="btn btn-white btn-rounded z-depth-1a"><i class="fab fa-google-plus-g"></i></button>
+      </div>
+    </div>
+    <!--Footer-->
+    <div class="modal-footer mx-5 pt-3 mb-1">
+      <p class="font-small grey-text d-flex justify-content-end">Not a member? <a href="#" class="blue-text ml-1">
+          Sign Up</a></p>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>
+</div>
+<!-- Modal -->
+
+<div class="text-center" style="margin-top:100px; ">
+<a href="" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#elegantModalForm">Launch
+  modal Login Form</a>
+</div>
+<div>
+<!-- Editable table -->
+<div class="card pr-2" style="margin-left: 50px; margin-top:20px;">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
+  <div class="card-body">
+    <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success">
+        <i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <thead>
+          <tr>
+            <th class="text-center">FirstName</th>
+            <th class="text-center">SecondName</th>
+            <th class="text-center">Company Name</th>
+            <th class="text-center">GstTax</th>
+            <th class="text-center">customer view</th>
+            <th class="text-center">Remove</th>
+          </tr>
+        </thead>
+        {% for rec in subject %}
+        <tbody>
+          <tr>
+            <td class="pt-3-half">{{ rec.CompanyName }}</td>
+            <td class="pt-3-half">{{ rec.SecondName }}</td>
+            <td class="pt-3-half">{{ rec.SecondName }}{{ rec.FirstName }}</td>
+            <td class="pt-3-half">{{ rec.GstTax }}</td>
+            <td ><a class="btn-primary btn-rounded btn-sm my-0" href="{% url 'Customer:customer_view' customer_id=rec.id %}">customer view</a></td> 
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0"><a href="{% url 'Customer:customer_Delete' rec.id %}">Remove</a></button></span>
+            </td>
+            
+          </tr>
+          <!-- This is our clonable table line -->
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+
+{% endblock %}

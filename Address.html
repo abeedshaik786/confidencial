@@ -1,0 +1,132 @@
+
+<h5  class="container font-weight-bold">Address <i class="fa fa-plus-square" data-toggle="modal" data-target="#specificchange"   aria-hidden="true"></i></h5>
+</h5>
+   <!-- Modal -->
+<div class=" container row">
+          {% for Add in cust_obj.address_set.all %}
+            <div class="col-md-6">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-sm-6 firstaddress" ><h6 class="font-weight-bold" id="firstaddress">First Address :-</h6>{{Add.FirstAddress}}</div>
+                              <div class="col-sm-6 secondaddress"><h6 class="font-weight-bold" id="secondaddress">Second Address :-</h6>{{ Add.ScondAddress }}</div>
+                            </div>
+                          </div>
+                          <div class="fotter_buttons1">
+                              <div class="f-right1">
+      
+                                      <a class="container" href="{% url 'Customer:Address_Delete' Add.id %}">
+                                          <i class="fa fa-trash" style="color: red;" aria-hidden="true"></i>
+                                      </a>
+                                 <a href="#!">
+                                <i class="fas fa-user-edit" style="color: orange;" id="Edite_address"  address_id ='{{Add.id}}' aria-hidden="true"></i>
+                                </a>
+                                </div>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                <div class="col-sm-6"></div>
+               </div>
+<!-- Address model form  -->
+<section>
+        <div class="modal-dialog" role="document">
+           <div class="modal fade" id="specificchange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+           aria-hidden="true">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content">
+               <div class="modal-header text-center">
+                 <h4 class="modal-title w-100 font-weight-bold">Add Address</h4>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body mx-3">
+                   <form id="Address_saving" method="POST">
+                       {% csrf_token %}
+                       <input type="hidden" name="customer_id" id='customer_id' value="{{ cust_obj.id }}">
+                 <div class="md-form mb-5">
+                     <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                   <input type="text" id="defaultForm-email" name="firstaddress" class="form-control validate">
+                   <label data-error="wrong" data-success="right" for="defaultForm-email">First Address</label>
+                 </div>
+                 <div class="md-form mb-4">
+                     <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                     <input type="text" id="defaultForm-pass"  name="secondaddress" class="form-control validate">
+                     <label data-error="wrong" data-success="right" for="defaultForm-pass">Second Address</label>
+                   </div>
+                   <div class="modal-footer d-flex justify-content-center">
+                       <button type="submit" class="btn btn-default">Add Address</button>
+                     </div>
+                 </form>
+               </div>        
+             </div>
+           </div>
+         </div>
+       </div>
+       </section>
+       <!-- adding data to additable table for edite data -->
+       <section>
+            <div class="modal fade" id="data-modification" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <form action="{% url 'Customer:Address_Edite_Saving' %}" method="POST">
+                        {% csrf_token%}
+                        <input type="hidden" name="customer_id" value="{{ cust_obj.id }}">
+                        <input type="hidden" name="Address_id" id="address_id" value="">
+                        
+                  <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="Eidte-First-Add" name="firstaddress" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-name">First Address</label>
+                  </div>
+                  <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text"  id="Eidte-Second-Add" name="secondaddress" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-email">Second Address</label>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                      <button  type ="submit" class="btn btn-deep-orange" >Edite Data</button>
+                    </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+       </section>
+       <script>
+            // GETING Address to Edite 
+              $(document).ready(function(e){
+              $("#Address_saving ").on('submit',function(e){
+                e.preventDefault();
+                var customer_id = $('#customer_id').val();
+                $.ajax({
+                  headers: { "X-CSRFToken": '{{csrf_token}}' },
+                  type:"POST",
+                  url: "{% url 'Customer:Address_saving' %}",
+                  data:
+                    'customer_id='+customer_id+'&firstaddress='+$('#defaultForm-email').val()+'&secondaddress='+$('#defaultForm-pass').val()+'&csrfmiddlewaretoken='+ '{{ csrf_token }}',
+                  success: function( response ) {
+                    debugger
+                   if(response.success){
+                     window.location.reload()
+                   }
+                        
+                       }
+                           })
+          
+                  })
+                })
+              // submiting Address after Edite
+            </script>

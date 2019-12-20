@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<body>
+
+ <!-- customer data view from here        -->
+<section class="container customer_input "> 
+        <section class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                    
+                    </div>
+                    <div class="col-sm-6"style="float:right;">
+                        <a href="#!">
+                            <i class="far fa-save" style="font-size:30px; color:blue; float:right; margin:10px; position:relative; left:100px; bottom:20px"></i>
+                        </a>
+                        <a href="{% url 'Customer:customer_Delete' cust_obj.id %}">
+                            <i class="far fa-trash-alt" style="font-size:30px; color:red; float:right; margin:10px; position:relative; left:100px; bottom:20px"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+    <!-- Material form register -->
+<div class="">
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
+
+        <!-- Form -->
+        <form class="text-center" id="postform" style="color: #757575;" method="POST">
+
+               {% csrf_token %}
+
+              <input type="hidden" name="customer_id" id="customer_id" value="{{ cust_obj.id }}">
+
+            <div class="form-row">
+                <div class="col-sm">
+                    <!-- First name -->
+                    <div class="md-form">
+                        <input type="text" id="firstname" name="firstName" name="firstname" value="{{ cust_obj.FirstName }}" id="materialRegisterFormFirstName" class="form-control">
+                        <label for="materialRegisterFormFirstName">First name</label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <!-- Last name -->
+                    <div class="md-form">
+                        <input type="text" id="secondname" name="secondname" value="{{cust_obj.SecondName}}" id="materialRegisterFormLastName" class="form-control">
+                        <label for="materialRegisterFormLastName">Last name</label>
+                    </div>
+                </div>
+            </div>
+            <!-- E-mail -->
+            <div class="md-form mt-0">
+                <input type="text" id="companyname" name="companyname" value="{{cust_obj.CompanyName}}" id="materialRegisterFormEmail" class="form-control">
+                <label for="materialRegisterFormEmail">Company Name</label>
+            </div>
+            <!-- Password -->
+            <div class="md-form">
+                <input type="text" id="gsttax" name="gsttax" value="{{cust_obj.GstTax}}"id="materialRegisterFormPassword" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
+                <label for="materialRegisterFormPassword">GstTax</label>
+                <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                </small>
+            </div>
+            <!-- Phone number -->
+           
+            <div>
+                 <input type="submit">
+            </div>
+        </form>
+        <!-- Form -->
+
+    </div>
+
+</div>
+<!-- Material form register -->
+  </section>
+  <script>
+     $(document).ready(function(e){
+      $('#postform').on('submit',function(e){
+           e.preventDefault();
+           var customer_id = $('#customer_id').val();
+           var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+            $.ajax({
+                headers: { "X-CSRFToken": '{{csrf_token}}' },
+                 type:"POST",
+                  url:"{% url 'Customer:Customer_Edite' %}",
+                   data:'customer_id='+customer_id+'&firstname='+$('#firstname').val()+'&secondname='+$('#secondname').val()+'&companyname='+$('#companyname').val()+'&gsttax='+$('#gsttax').val()+'&csrfmiddlewaretoken='+ '{{ csrf_token }}',
+              success: function(response_data){
+                alert(success);
+
+             }
+            })
+         })
+        })
+</script>
+
+<div style="margin-left: 40px">
+ {% block Address %}
+ {% include "Address.html" with cust_obj=cust_obj %}
+
+ {% endblock %}
+</div>
+<section class="container" style="margin-left: 25px">
+   {% block contacts %}
+  {% include "contacts.html" with cust_obj=cust_obj %}
+
+{% endblock %}
+</section>
+
+</body>
+{% endblock %}

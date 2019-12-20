@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+body{
+  background: #e1ecf2;
+  margin: 0px;
+}
+body.container{
+  margin: 0px;
+}
+.wrapper{
+  margin: 10px;
+
+}
+.wrapper .top_navbar{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  position: fixed;
+  top: 5px;
+
+}
+.wrapper .top_navbar .hamburger{
+  width: 40px;
+  padding: 10px;
+  height: 60px;
+  background: #2e4ead;
+  border: 15px 17px;
+  border-top-left-radius: 20px;
+  cursor: pointer;
+}
+
+.wrapper .top_navbar .hamburger div{
+  width: 35px;
+  height: 4px;
+  margin: 5px 0;
+  border-radius: 5px;
+
+}
+.wrapper .top_navbar .top_menu{
+  width:calc(100% - 50px);
+  background: #ffffff;;
+  height: 100%;
+  border-top-right-radius:20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border: #4360b5 solid 1px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1)
+}
+
+.wrapper .top_navbar .top_menu .logo{
+  color: #2e4ead;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+
+}
+.wrapper .top_navbar .top_menu ul{
+  display: flex;
+
+}
+.wrapper .top_navbar .top_menu ul li a{
+  display: block;
+  margin: 0 10px;
+  width: 25px;
+  height: 25px;
+  line-height: 35px;
+  border: 1px solid #2e4ead;
+  text-align: center;
+  border-radius:50%; 
+  color: #2e4ead;
+
+
+}
+.wrapper .top_navbar .top_menu ul li a:hover{
+  background: #4360b5;
+  color: #fff;
+}
+.wrapper .sidebar{
+  position:fixed;
+  top: 65px;
+  left: 10px;
+  background: #2e4ead;
+  width: 200px;
+  height: calc(100% - 70px);
+  border-bottom-left-radius:20px;
+  transition: all 0.3s ease; 
+
+}
+.wrapper .sidebar ul li a{
+  display: block;
+  padding: 20px;
+  color: #fff;
+  position: relative;
+  margin-bottom: 1px;
+  color: #92a6e2;
+  white-space: nowrap;
+
+}
+.wrapper .sidebar ul li a:before{
+   content: "";
+   position:absolute;
+   top:0;
+   left: 0;
+   width: 3px;
+   height: 100%;
+   background: #92a6e2;
+   display: none;
+
+}
+.wrapper .sidebar ul li a span.icon{
+  margin-right: 10px;
+  display: inline-block;
+
+}
+.wrapper .sidebar ul li a span.title{
+  display: inline-block;
+}
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a.active{
+  background: #4360b5;
+  color: #fff;
+}
+.wrapper .sidebar ul li a:hover:before,
+.wrapper .sidebar ul li a.active:before{
+  display:block;
+}
+.wrapper.collapse .sidebar{
+  width: 70px;
+}
+.wrapper.collapse .sidebar ul li a{
+  text-align: center;
+
+}
+.wrapper.collapse.sidebar ul li a span.icon{
+  margin: 0px;
+
+}
+.wrapper.collapse.sidebar ul li a span.title{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

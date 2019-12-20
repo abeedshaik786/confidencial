@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html> 
+<head>
+   {% load static %}
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/base.css">
+<link rel="stylesheet" type="text/css" href="/static/customer.css">
+<link rel="stylesheet" type="text/js"  href="/static/base.js">
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
+</head>
+<body class="">
+  <div class="wrapper">
+    <div class="top_navbar">
+      <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="top_menu">
+        <div class="logo">Customer management</div>
+        <ul>
+          <li>
+            <a href="#"><i class="fa fa-users white" aria-hidden="true"></i></a>
+        </li>
+          <li><a href="#"><i class="fa fa-users white" aria-hidden="true"></i></a>
+        </li>
+          <li>
+            <a href="#"><i class="fa fa-users white" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% block sidebar %}
+    <div class="sidebar">
+      <ul>
+        <li><a href="#">
+          <span class="icon"><i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
+          <span class="title">Customer List</span>
+        </a></li>
+        <li><a href="#" class="active">
+            <span class="icon"><i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <span class="title">Customer</span>
+        </a></li>
+        <li><a href="#">
+            <span class="icon"><i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <span class="title">Data</span>
+        </a></li>
+        <li><a href="#">
+            <span class="icon"><i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <span class="title">Abeed</span>
+        </a></li>
+        <li><a href="#">
+            <span class="icon"><i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <span class="title">Documentation</span>
+        </a></li>
+      </ul>
+    </div>
+    
+  </div>
+  {% endblock %}
+    <div class="main_container container">
+        
+        {% block content  %}
+          
+        {% endblock %}
+    </div>
+  <script>
+      // GETING Address to Edite 
+        $(document).ready(function(e){
+        $("#Edite_address ").on('click',function(e){
+          e.preventDefault();
+          var address_id = $(this).attr('address_id')
+          $.ajax({
+            type:"GET",
+            url: "{% url 'Customer:Address_Edite' %}",
+            contentType: 'json',
+            data: {
+              'address_id': address_id
+            },
+            success: function( data ) {
+              var main = JSON.parse(data)[0]
+              var response = main.fields
+                $('#data-modification').modal('show')
+                  $('#Eidte-First-Add').val(response.FirstAddress)
+                  $('#Eidte-Second-Add').val(response.ScondAddress)
+                  $('#address_id').val(main.pk)
+                  
+                 }
+                     })
+    
+            })
+          })
+</script>
+<!-- Edite Address -->
+ <script>
+        
+      $(document).ready(function(e){
+        $('#Edite_Contacts').on('click',function(e){
+          e.preventDefault();
+          var contact_id = $(this).attr('contacts_id')
+          $.ajax({
+            type:"GET",
+            url:"{% url 'Customer:Contacts_Edite' %}",
+            contentType:"json",
+            data:{
+               'contact_id':contact_id
+            },
+            success: function(data){
+              var main = JSON.parse(data)[0]
+              var response = main.fields
+              $('#Contacts_EditeForm').modal('show')
+              $('#contacts_mobilenumber').val(response.MobileNumber)
+              $('#contacts_email').val(response.EmailId)
+              $('#contacts_position').val(response.Position)
+              $('#contacts_id').val(main.pk)
+            }
+          })
+        })
+      })
+</script>
+
+  <!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
+</body>
+</html>
